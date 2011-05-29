@@ -24,8 +24,8 @@ Installation & Usage
     path.
 
 3.  Update the `sid`, `token`, `to` (the number you want to send to), `from` (one 
-    of your Twilio numbers) variables in the file `twilio.yaml` and the
-    copy to `/etc/puppet/`.
+    of your Twilio numbers) variables in the file `twilio.yaml` and then
+    copy the file to `/etc/puppet/`.
 
 4.  Enable pluginsync and reports on your master and clients in `puppet.conf`
 

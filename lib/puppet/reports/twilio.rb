@@ -20,7 +20,8 @@ Puppet::Reports.register_report(:twilio) do
   TO = config[:to]
 
   desc <<-DESC
-  Send report information to Twilio.
+  Send report information to Twilio. You will need a Twilio account and token, a source phone number, and 
+  a target phone number to send the SMS to.
   DESC
 
   def process
@@ -32,7 +33,7 @@ Puppet::Reports.register_report(:twilio) do
           'To'   => TO,
           'Body' => "Puppet run for #{self.host} #{self.status} at #{Time.now.asctime}"
       }
-      resp = account.request("/#{API_VERSION}/Accounts/#{Account_SID}/SMS/Messages", "POST", t)
+      resp = account.request("/#{API_VERSION}/Accounts/#{SID}/SMS/Messages", "POST", t)
     end
   end
 end
