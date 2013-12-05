@@ -1,0 +1,8 @@
+---
+:botemail: botemail
+:key: key
+:type: type
+:to: to
+:subject: subject
+:zulip_statuses:
+  - failed

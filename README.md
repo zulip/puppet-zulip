@@ -1,54 +1,60 @@
-puppet-twilio
+puppet-zulip
 =============
 
 Description
 -----------
 
-A Puppet report handler for sending notifications to Twilio.  You'll
-need a Twilio account.
+A Puppet report handler for sending notifications to Zulip.  You'll
+need a Zulip account.
+
+Based on handlers by James Turnbull!
 
 Requirements
 ------------
 
-* `twiliolib`
 * `puppet`
 
 Installation & Usage
 --------------------
 
-1.  Install the `twiliolib` gem on your Puppet master
-
-        $ sudo gem install twiliolib
-
-2.  Install puppet-twilio as a module in your Puppet master's module
+1.  Install puppet_zulip as a module in your Puppet master's module
     path.
 
-3.  Update the `sid`, `token`, `to` (the number you want to send to), `from` (one 
-    of your Twilio numbers) variables in the file `twilio.yaml` and then
-    copy the file to `/etc/puppet/`.
+2.  Get an API bot email & key from zulip [here][https://zulip.com/#settings]
 
-4.  Enable pluginsync and reports on your master and clients in `puppet.conf`
+3.  Update the  `botemail`, `key` from above.
+    Update the`type` (stream or private), , `to` (Stream name or email to send a private message), & `subject` (for stream subjects) variables in the file `zulip.yaml` and then copy the file to `/etc/puppet/` or for puppet enterpise '/etc/puppetlabs/puppet'.
+    The `zulip_statuses` should be an array of statuses to send notifications for and defaults to `'failed'`. Specify `'all'` to receive notifications from all Puppet runs.
+
+4. You can also use this by including the class in a manifest, with either parameters or hiera to set the settings. It will create the settings file in the correct place for you.
+
+5.  Enable reports on your master `puppet.conf`
 
         [master]
         report = true
-        reports = twilio
-        pluginsync = true
-        [agent]
-        report = true
-        pluginsync = true
+        reports = zulip
 
-5.  Run the Puppet client and sync the report as a plugin
+6.  Run the Puppet client and sync the report as a plugin
+
+7.  To temporarially disable Zulip notifications add a file named 'zulip_disabled' in the same path as zulip.yaml.
+    (Removing it will re-enable notifications)
+
+        $ touch /etc/puppet/zulip_disabled
 
 Author
 ------
 
-James Turnbull <james@lovedthanlost.net>
+Matthew Barr <mbarr@mbarr.nett>
+
+Based on code by James Turnbull <james@lovedthanlost.net>
+(puppet-hipchat & puppet-twilio )
+
 
 License
 -------
 
-    Author:: James Turnbull (<james@lovedthanlost.net>)
-    Copyright:: Copyright (c) 2011 James Turnbull
+    Author:: Matthew Barr (<mbarr@mbarr.nett>)
+    Copyright:: Copyright (c) 2013 Matthew Barr
     License:: Apache License, Version 2.0
 
     Licensed under the Apache License, Version 2.0 (the "License");
