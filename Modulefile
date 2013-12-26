@@ -1,5 +1,5 @@
 name 'mbarr-puppet_zulip'
-version '0.0.1'
+version '0.0.2'
 license 'Apache 2.0'
 summary 'A Puppet report handler for sending notifications to zulip'
 project_page 'https://github.com/matthewbarr/puppet-zulip'

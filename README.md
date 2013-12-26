@@ -20,13 +20,30 @@ Installation & Usage
 1.  Install puppet_zulip as a module in your Puppet master's module
     path.
 
-2.  Get an API bot email & key from zulip [here](https://zulip.com/#settings)
+2.  Get an API bot email & key from zulip [here][https://zulip.com/#settings]
 
-3.  Update the  `botemail`, `key` from above.
-    Update the`type` (stream or private), , `to` (Stream name or email to send a private message), & `subject` (for stream subjects) variables in the file `zulip.yaml` and then copy the file to `/etc/puppet/` or for puppet enterpise '/etc/puppetlabs/puppet'.
-    The `zulip_statuses` should be an array of statuses to send notifications for and defaults to `'failed'`. Specify `'all'` to receive notifications from all Puppet runs.
+3.  Edit variables in the file `zulip.yaml` and then copy the file to `/etc/puppet/` or for puppet enterpise '/etc/puppetlabs/puppet'.
+    Update: 
+    * `botemail`, `key` with values from #2.
+    * `type`  = stream or private,
+    * `to` (Stream name or email to send a private message)
+    * `subject` (for stream subjects)   (only needed for stream.s)
+    * `zulip_statuses` should be an array of statuses to send notifications for and defaults to `'failed'`. Specify `'all'` to receive notifications from all Puppet runs.
+    * `github_user`: github.com user account. If specified, the report processor will create a Gist containing the log output from the run and link it in the IRC notification.
+    * `github_password`: above github user's password.
+    * `parsed_reports_dir`: path to a directory on the reportserver. If specified, a human-readable version of the report will be saved in this directory, and it's path will be mentioned in the IRC notification. Don't forget to create the directory on your reportserver, writeable to the user running the puppet-master, and setup a job to clean old reports.
+    * `logs`: Boolean.  Send the human readable version of the report (only output, not summaries) in the message itself.
+    * `report_url`: an URL, which if specified, will be appended to the IRC notification. Some special characters will be expanded to values found in the report. Example: `http://foreman.example.com/hosts/%h/reports/last`. Currently supported characters include:
+      * `%c`: configuration version string
+      * `%e`: puppet's run environment
+      * `%h`: host name from the report
+      * `%k`: kind of report
+      * `%s`: report status
+      * `%t`: report timestamp
+      * `%v`: puppet version
+    
 
-4. You can also use this by including the class in a manifest, with either parameters or hiera to set the settings. It will create the settings file in the correct place for you.
+4. Or you can also use this by including the class in a manifest, with either parameters or hiera to set the settings. It will create the settings file in the correct place for you.
 
 5.  Enable reports on your master `puppet.conf`
 
@@ -44,16 +61,16 @@ Installation & Usage
 Author
 ------
 
-Matthew Barr <mbarr@mbarr.nett>
+Matthew Barr <mbarr@mbarr.net>
 
 Based on code by James Turnbull <james@lovedthanlost.net>
-(puppet-hipchat & puppet-twilio )
+(puppet-hipchat & puppet-twilio & puppet-irc )
 
 
 License
 -------
 
-    Author:: Matthew Barr (<mbarr@mbarr.nett>)
+    Author:: Matthew Barr (<mbarr@mbarr.net>)
     Copyright:: Copyright (c) 2013 Matthew Barr
     License:: Apache License, Version 2.0
 

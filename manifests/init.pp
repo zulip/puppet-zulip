@@ -6,6 +6,11 @@ class puppet_zulip (
   $subject     = undef,
   $statuses    = [ 'failed' ],
   $config_file = "${puppet_zulip::params::puppetconf_path}/zulip.yaml",
+  $github_user = undef,
+  $github_password = undef,
+  $parsed_reports_dir = undef,
+  $logs = undef,
+  $report_url = undef,
 ) inherits puppet_zulip::params {
 
   file { $config_file:

@@ -6,3 +6,8 @@
 :subject: subject
 :zulip_statuses:
   - failed
+:github_user: 'username'
+:github_password: 'password'
+:parsed_reports_dir: '/dir'
+:logs: false
+:report_url: 'http://url'
