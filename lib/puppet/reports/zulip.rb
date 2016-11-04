@@ -19,6 +19,7 @@ Puppet::Reports.register_report(:zulip) do
   ZULIP_KEY = config[:key]
   ZULIP_TO = config[:to]
   ZULIP_SUBJECT = config[:subject]
+  ZULIP_SITE = config[:zulip_site]
   DISABLED_FILE = File.join([File.dirname(Puppet.settings[:config]), 'zulip_disabled'])
   
   CONFIG = config
@@ -75,9 +76,9 @@ Puppet::Reports.register_report(:zulip) do
         message << CONFIG[:report_url].gsub(/%([#{map.keys}])/) {|s| map[$1].to_s }
       end
 
-
+      zulip_api = (ZULIP_SITE.sub %r{^https?:(//|\\\\)(www\.)?}i, '').concat('/api')
       Puppet.debug "Sending status for #{self.host} to #{ZULIP_TO}"
-      https = Net::HTTP.new('api.zulip.com','443')
+      https = Net::HTTP.new(zulip_api, '443')
       https.use_ssl = true
 
       request = Net::HTTP::Post.new("/v#{API_VERSION}/messages")

@@ -41,7 +41,7 @@ Installation & Usage
       * `%s`: report status
       * `%t`: report timestamp
       * `%v`: puppet version
-    
+    * `zulip_site`: an URL to your Zulip arbitrary server.
 
 4. Or you can also use this by including the class in a manifest, with either parameters or hiera to set the settings. It will create the settings file in the correct place for you.
 

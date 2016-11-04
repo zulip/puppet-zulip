@@ -11,3 +11,4 @@
 :parsed_reports_dir: '/dir'
 :logs: false
 :report_url: 'http://url'
+:zulip_site: 'https://zulip.example.com'
