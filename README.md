@@ -20,7 +20,7 @@ Installation & Usage
 1.  Install puppet_zulip as a module in your Puppet master's module
     path.
 
-2.  Get an API bot email & key from zulip [here][https://zulip.com/#settings]
+2.  Get an API bot email & key from zulip [here](https://zulip.com/#settings)
 
 3.  Edit variables in the file `zulip.yaml` and then copy the file to `/etc/puppet/` or for puppet enterpise '/etc/puppetlabs/puppet'.
     Update: 
