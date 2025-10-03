@@ -58,7 +58,7 @@ Puppet::Reports.register_report(:zulip) do
       if CONFIG[:parsed_reports_dir]
         report_server = Socket.gethostname
         report_path = last_report
-        message << " Summary at #{report_server}:#{report_path}"
+        message << "\n**Summary file**: `#{report_server}:#{report_path}`"
       end
 
       if CONFIG[:report_url] and CONFIG[:report_url].is_a?(String)
