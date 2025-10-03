@@ -47,20 +47,6 @@ Puppet::Reports.register_report(:zulip) do
         message << "[GitHub Gist](#{gist(self.host,output)})"
       end
 
-      if CONFIG[:logs]
-        self.logs.each do |log|
-          if log.to_s !~ /Loading facts/
-            message << log.to_s + "\n"
-          end
-        end
-      end
-
-      if CONFIG[:parsed_reports_dir]
-        report_server = Socket.gethostname
-        report_path = last_report
-        message << "\n**Summary file**: `#{report_server}:#{report_path}`"
-      end
-
       if CONFIG[:report_url] and CONFIG[:report_url].is_a?(String)
         map = {
           'c' => self.respond_to?(:configuration_version) ? self.configuration_version : nil,
@@ -73,6 +59,20 @@ Puppet::Reports.register_report(:zulip) do
         }
         processed_url = CONFIG[:report_url].gsub(/%([#{map.keys}])/) {|s| map[$1].to_s }
         message << "[Report URL](#{processed_url})"
+      end
+
+      if CONFIG[:parsed_reports_dir]
+        report_server = Socket.gethostname
+        report_path = last_report
+        message << "\n**Summary file**: `#{report_server}:#{report_path}`"
+      end
+
+      if CONFIG[:logs]
+        self.logs.each do |log|
+          if log.to_s !~ /Loading facts/
+            message << log.to_s + "\n"
+          end
+        end
       end
 
       zulip_api = (ZULIP_SITE.sub %r{^https?:(//|\\\\)(www\.)?}i, '').concat('/api')
