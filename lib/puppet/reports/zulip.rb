@@ -74,7 +74,7 @@ Puppet::Reports.register_report(:zulip) do
       if CONFIG[:logs]
         self.logs.each do |log|
           if log.to_s !~ /Loading facts/
-            message << log.to_s + "\n"
+            message << "> #{log.to_s}\n"
           end
         end
       end
