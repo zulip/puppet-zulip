@@ -43,8 +43,10 @@ Puppet::Reports.register_report(:zulip) do
       end
 
       message = "Puppet #{self.environment} run for #{self.host} #{self.status} at <time:#{Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z')}>."
+      links = []
+
       if CONFIG[:github_user] && CONFIG[:github_password]
-        message << "[GitHub Gist](#{gist(self.host,output)})"
+        links << "[GitHub Gist](#{gist(self.host,output)})"
       end
 
       if CONFIG[:report_url] and CONFIG[:report_url].is_a?(String)
@@ -58,8 +60,10 @@ Puppet::Reports.register_report(:zulip) do
           'v' => self.respond_to?(:puppet_version)        ? self.puppet_version : nil,
         }
         processed_url = CONFIG[:report_url].gsub(/%([#{map.keys}])/) {|s| map[$1].to_s }
-        message << "[Report URL](#{processed_url})"
+        links << "[Report URL](#{processed_url})"
       end
+
+      message << " #{links.join(' | ')}" if links.any?
 
       if CONFIG[:parsed_reports_dir]
         report_server = Socket.gethostname
