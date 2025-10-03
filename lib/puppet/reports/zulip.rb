@@ -44,7 +44,7 @@ Puppet::Reports.register_report(:zulip) do
 
       message = "Puppet #{self.environment} run for #{self.host} #{self.status} at <time:#{Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z')}>."
       if CONFIG[:github_user] && CONFIG[:github_password]
-        message << " Created a Gist showing the output at #{gist(self.host,output)}"
+        message << "[GitHub Gist](#{gist(self.host,output)})"
       end
 
       if CONFIG[:logs]
@@ -71,8 +71,8 @@ Puppet::Reports.register_report(:zulip) do
           't' => self.respond_to?(:time)                  ? self.time : nil,
           'v' => self.respond_to?(:puppet_version)        ? self.puppet_version : nil,
         }
-        message << " Report URL: "
-        message << CONFIG[:report_url].gsub(/%([#{map.keys}])/) {|s| map[$1].to_s }
+        processed_url = CONFIG[:report_url].gsub(/%([#{map.keys}])/) {|s| map[$1].to_s }
+        message << "[Report URL](#{processed_url})"
       end
 
       zulip_api = (ZULIP_SITE.sub %r{^https?:(//|\\\\)(www\.)?}i, '').concat('/api')
