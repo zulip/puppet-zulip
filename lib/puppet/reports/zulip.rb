@@ -42,7 +42,7 @@ Puppet::Reports.register_report(:zulip) do
         self.environment == 'production'
       end
 
-      message = "Puppet #{self.environment} run for #{self.host} #{self.status} at #{Time.now.asctime}."
+      message = "Puppet #{self.environment} run for #{self.host} #{self.status} at <time:#{Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z')}>."
       if CONFIG[:github_user] && CONFIG[:github_password]
         gist_id = gist(self.host,output)
         message << " Created a Gist showing the output at #{gist_id}"
